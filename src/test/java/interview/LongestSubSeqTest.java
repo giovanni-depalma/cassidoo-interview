@@ -1,0 +1,50 @@
+package interview;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class LongestSubSeqTest {
+
+    @Test
+    public void test1(){
+        List<Integer> seq = List.of(1, 9, 87, 3, 10, 4, 20, 2, 45);
+        List<Integer> expected = List.of(1, 3, 4, 2);
+        List<Integer> actual = new LongestSubSeq().apply(seq);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test2(){
+        List<Integer> seq = List.of(36, 41, 56, 35, 91, 33, 34, 92, 43, 37, 42  );
+        List<Integer> expected = List.of(36, 35, 33, 34, 37);
+        List<Integer> actual = new LongestSubSeq().apply(seq);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testEmpty(){
+        List<Integer> seq = List.of();
+        List<Integer> expected = List.of();
+        List<Integer> actual = new LongestSubSeq().apply(seq);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testNotConsecutive(){
+        List<Integer> seq = List.of(1,10,20,30,40,50);
+        List<Integer> expected = List.of(1);//expect first occurrence of size 1
+        List<Integer> actual = new LongestSubSeq().apply(seq);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testMultipleResult(){
+        List<Integer> seq = List.of(1,10,11,12,21,22,23,50);
+        List<Integer> expected = List.of(10,11,12);//expect first occurrence of size 3
+        List<Integer> actual = new LongestSubSeq().apply(seq);
+        assertEquals(expected, actual);
+    }
+}
