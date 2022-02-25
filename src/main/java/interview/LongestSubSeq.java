@@ -3,36 +3,10 @@ package interview;
 import java.util.*;
 import java.util.function.Function;
 
-public class LongestSubSeq implements Function<List<Integer>, List<Integer>> {
-
-
-    private LinkedList<Integer> listWith(LinkedList<Integer> list, Integer toAdd){
-        LinkedList<Integer> newSeq = new LinkedList<>(list);
-        newSeq.add(toAdd);
-        return newSeq;
-    }
-
-    private LinkedList<Integer> listOf(Integer toAdd){
-        LinkedList<Integer> newSeq = new LinkedList<>();
-        newSeq.add(toAdd);
-        return newSeq;
-    }
-
-    private LinkedList<Integer> merge(LinkedList<Integer> list1, LinkedList<Integer> list2){
-        LinkedList<Integer> newSeq = new LinkedList<>();
-        newSeq.addAll(list1);
-        newSeq.addAll(list2);
-        return newSeq;
-    }
-
-
-    private boolean isInSequence(int num1, int num2){
-        return num1 + 1 == num2;
-    }
-
+public class LongestSubSeq implements Function<List<Integer>, Integer> {
 
     @Override
-    public List<Integer> apply(List<Integer> seq) {
+    public Integer apply(List<Integer> seq) {
         return  seq.parallelStream()
                 .sorted()
                 //subsequences of consecutive integers
@@ -76,7 +50,7 @@ public class LongestSubSeq implements Function<List<Integer>, List<Integer>> {
                         }
                 )
                 //find best subsequence
-                .stream().max(Comparator.comparing(LinkedList::size))
+                .stream().max(Comparator.comparing(List::size))
                 //organize in map for quick searches
                 .map(HashSet::new)
                 //preserve original order
@@ -84,8 +58,36 @@ public class LongestSubSeq implements Function<List<Integer>, List<Integer>> {
                     List<Integer> result = new ArrayList<>(seq);
                     result.removeIf(i -> !winnerSequence.contains(i));
                     return result;
-                }).orElse(List.of());
+                })
+                .map(result -> {
+                    System.out.println(result);
+                    return result;
+                })
+                .map(List::size)
+                .orElse(0);
+    }
+
+    private LinkedList<Integer> listWith(LinkedList<Integer> list, Integer toAdd){
+        LinkedList<Integer> newSeq = new LinkedList<>(list);
+        newSeq.add(toAdd);
+        return newSeq;
+    }
+
+    private LinkedList<Integer> listOf(Integer toAdd){
+        LinkedList<Integer> newSeq = new LinkedList<>();
+        newSeq.add(toAdd);
+        return newSeq;
+    }
+
+    private LinkedList<Integer> merge(LinkedList<Integer> list1, LinkedList<Integer> list2){
+        LinkedList<Integer> newSeq = new LinkedList<>();
+        newSeq.addAll(list1);
+        newSeq.addAll(list2);
+        return newSeq;
     }
 
 
+    private boolean isInSequence(int num1, int num2){
+        return num1 + 1 == num2;
+    }
 }
