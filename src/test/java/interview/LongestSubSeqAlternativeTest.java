@@ -6,9 +6,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LongestSubSeqTest {
+public class LongestSubSeqAlternativeTest {
 
-    private final LongestSubSeq f = new LongestSubSeq();
+    private final LongestSubSeqAlternative f = new LongestSubSeqAlternative();
 
     @Test
     public void test1(){
@@ -20,7 +20,7 @@ public class LongestSubSeqTest {
 
     @Test
     public void test2(){
-        List<Integer> seq = List.of(36, 41, 56, 35, 91, 33, 34, 92, 43, 37, 42  );
+        List<Integer> seq = List.of(36, 41, 56, 35, 91, 33, 34, 92, 43, 37, 42);
         int expected = 5;//List.of(36, 35, 33, 34, 37);
         int actual = f.apply(seq);
         assertEquals(expected, actual);
