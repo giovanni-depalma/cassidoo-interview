@@ -6,6 +6,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * This week’s question:
+ * Given a 2D array of 0s and 1s, return the size of the largest rectangle of 1s in the array.
+ */
 public class LongestSubSeqAlternative implements Function<List<Integer>, Integer> {
 
     record Tuple(int t1, int t2) {

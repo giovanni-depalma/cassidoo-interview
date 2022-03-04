@@ -3,6 +3,10 @@ package interview;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * This week’s question:
+ * Given a 2D array of 0s and 1s, return the size of the largest rectangle of 1s in the array.
+ */
 public class LongestSubSeq implements Function<List<Integer>, Integer> {
 
     @Override
