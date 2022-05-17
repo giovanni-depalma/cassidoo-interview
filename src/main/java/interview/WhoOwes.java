@@ -124,6 +124,13 @@ public class WhoOwes {
         );
         whoOwes(receipts);
 
+        receipts = List.of(
+                new Receipt("Ximena",40),
+                new Receipt("Clara",100),
+                new Receipt("Cassidy",100)
+        );
+        whoOwes(receipts);
+
         receipts = List.of();
         whoOwes(receipts);
     }
