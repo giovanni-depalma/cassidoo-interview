@@ -3,6 +3,12 @@ package interview;
 import java.text.MessageFormat;
 import java.util.*;
 
+/**
+ * This week’s question:
+ * Given an n x m matrix where all of the units are 0s except for an 1 for “start”,
+ * a 2 for “end”, and 3s for walls, find the shortest paths that you can take to get from 1 to 2,
+ * while working around 3s.
+ */
 public class StartToEnd {
     enum CellType {
         FREE, START, END, WALL;
@@ -31,26 +37,10 @@ public class StartToEnd {
         }
     }
 
-    private static List<Movement> startToEnd(int[][] grid) {
-        return findStart(grid).map(start -> {
-            var queue = new LinkedList<Item>();
-            queue.add(start);
-            boolean[][] visited = new boolean[grid.length][grid[0].length];
-            while (!queue.isEmpty()) {
-                var item = queue.pollFirst();
-                if (CellType.END.equals(cellType(grid[item.row()][item.col()])))
-                    return item.movements();
-                Arrays.stream(Movement.values()).map(item::move)
-                        .filter(m -> m.isInside(grid.length, grid[0].length))
-                        .filter(m -> isNotWall(m, grid))
-                        .filter(m -> isNotVisited(m, visited))
-                        .forEach(m -> {
-                            visited[m.row][m.col()] = true;
-                            queue.add(m);
-                        });
-            }
-            return new ArrayList<Movement>();
-        }).orElse(List.of());
+    public static List<Movement> startToEnd(int[][] grid) {
+        return findStart(grid)
+                .map(start -> breadthFirstSearch(start, grid))
+                .orElse(List.of());
     }
 
     private static Optional<Item> findStart(int[][] grid) {
@@ -61,6 +51,26 @@ public class StartToEnd {
             }
         }
         return Optional.empty();
+    }
+
+    private static List<Movement> breadthFirstSearch(Item start, int[][] grid){
+        var queue = new LinkedList<Item>();
+        queue.add(start);
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        while (!queue.isEmpty()) {
+            var item = queue.pollFirst();
+            if (CellType.END.equals(cellType(grid[item.row()][item.col()])))
+                return item.movements();
+            Arrays.stream(Movement.values()).map(item::move)
+                    .filter(m -> m.isInside(grid.length, grid[0].length))
+                    .filter(m -> isNotWall(m, grid))
+                    .filter(m -> isNotVisited(m, visited))
+                    .forEach(m -> {
+                        visited[m.row][m.col()] = true;
+                        queue.add(m);
+                    });
+        }
+        return List.of();
     }
 
     private static boolean isNotWall(Item item, int[][] grid) {
